@@ -127,6 +127,8 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Button.cpp" />
+    <ClCompile Include="Color.cpp" />
     <ClCompile Include="Cuadrado.cpp" />
     <ClCompile Include="Grid.cpp" />
     <ClCompile Include="main.cpp" />
@@ -136,6 +138,8 @@
     <ClCompile Include="Vector3D.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Button.h" />
+    <ClInclude Include="Color.h" />
     <ClInclude Include="Cuadrado.h" />
     <ClInclude Include="Grid.h" />
     <ClInclude Include="Pieza.h" />

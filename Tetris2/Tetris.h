@@ -5,12 +5,16 @@
 #include "Pieza.h"
 #include "Tablero.h"
 #include "Grid.h"
+#include "Button.h"
+#include "GL/freeglut.h"
 
 using namespace std;
 
 
 class Tetris {
 public:
+	Button prueba;
+
 	Grid tableroGUI;
 	Grid piezaReserva;
 	Grid pieza1;
@@ -36,7 +40,7 @@ public:
 	clock_t moveTimer = clock(); //100ms
 	clock_t dropTimer = clock(); //400ms
 
-	Tetris():
+	Tetris() :
 		filasDestruidas(0),
 		nivel(0),
 		tiempoPP(1000),
@@ -49,8 +53,9 @@ public:
 		pieza2(Vector3D(-5, -11, 0), piezas[1]),
 		pieza3(Vector3D(0, -11, 0), piezas[2]),
 		pieza4(Vector3D(5, -11, 0), piezas[3]),
-		piezaReserva(Vector3D(- 5, 15, 0), reserva),
-		tableroGUI(Vector3D(-5, 10, 0))
+		piezaReserva(Vector3D(-5, 15, 0), reserva),
+		tableroGUI(Vector3D(-5, 10, 0)),
+		prueba(Vector3D(-12, 14, 0), 5, 2, Color(1, 1, 1))
 
 	{
 		for (int i = 0; i < 4; i++) {

@@ -11,7 +11,7 @@ const int WINDOW_POSITION_X = 500;
 const int WINDOW_POSITION_Y = 50;
 const char TITLE[] = "Tetris";
 
-const GLclampf RED = 0.2;
+const GLclampf RED =  (GLclampf) 0.2;
 const GLclampf GREEN = 0.2;
 const GLclampf BLUE = 0.2;
 const GLclampf ALPHA = 1.0;
@@ -111,6 +111,7 @@ void specialKey(int key, int x, int y) {
 }
 
 int main(int argc, char** argv) {
+    //ShowWindow(GetConsoleWindow(), SW_HIDE);
 	
     writeLine("Generando ventana");
     glutInit(&argc, argv);                                              //Inicializa GLUT
