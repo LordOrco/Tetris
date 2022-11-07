@@ -12,4 +12,6 @@ void Button::Render() {
 	glVertex3f(ver3.GetX(), ver3.GetY(), ver3.GetZ());
 	glVertex3f(ver4.GetX(), ver4.GetY(), ver4.GetZ());
 	glEnd();
+
+	texto.Render();
 }

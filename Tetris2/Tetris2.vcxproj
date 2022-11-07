@@ -135,6 +135,7 @@
     <ClCompile Include="Pieza.cpp" />
     <ClCompile Include="Tablero.cpp" />
     <ClCompile Include="Tetris.cpp" />
+    <ClCompile Include="Text.cpp" />
     <ClCompile Include="Vector3D.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -145,6 +146,7 @@
     <ClInclude Include="Pieza.h" />
     <ClInclude Include="Tablero.h" />
     <ClInclude Include="Tetris.h" />
+    <ClInclude Include="Text.h" />
     <ClInclude Include="Vector3D.h" />
   </ItemGroup>
   <ItemGroup>

@@ -2,11 +2,13 @@
 #include "Vector3D.h"
 #include "GL/glut.h"
 #include "Color.h"
+#include "Text.h"
 
 class Button
 {
 private:
-	
+	Text texto;
+
 	Vector3D position;
 	Vector3D ver1;
 	Vector3D ver2;
@@ -20,7 +22,9 @@ private:
 
 public:
 
-	Button(Vector3D pPosition, float pWidth, float pHeight, Color pColor) :
+	Button(Vector3D pPosition, float pWidth, float pHeight, Color pColor, unsigned char* pString) :
+		texto(pString, Vector3D(pPosition.GetX() + pWidth / 4, pPosition.GetY() - pHeight/2, pPosition.GetZ() + 0.0001)),
+
 		position(pPosition),
 		width(pWidth),
 		height(pHeight),

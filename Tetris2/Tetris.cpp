@@ -74,9 +74,11 @@ void Tetris::ProcessMouseMovement(int x, int y) {
 void Tetris::ProcessMouseClick(int button, int state, int x, int y) {
 	cout << "Click:  " << button << endl;
 	cout << prueba.GetVer1().GetX() << ", " << prueba.GetVer3().GetX() << endl;
-	if (10 <= x && x <= 110 &&
+	if (state == 1 && 
+		10 <= x && x <= 110 &&
 		20 <= y && y <= 60) {
 		prueba.pressed();
+		pause = !pause;
 	}
 }
 
@@ -101,7 +103,7 @@ void Tetris::Render() {
 }
 
 void Tetris::Update() {
-	if (tablero.puedeNuevaPieza(pieza)) {
+	if (tablero.puedeNuevaPieza(pieza) && !pause) {
 
 		if (!piezaSinColocar && tablero.puedeNuevaPieza(pieza)) {
 			pieza = Pieza(piezas[0].tipo);
@@ -124,7 +126,7 @@ void Tetris::Update() {
 		}
 
 	}
-	else {
+	else if(!pause) {
 		glutLeaveMainLoop();
 	}
 	Render();
