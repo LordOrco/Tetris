@@ -130,8 +130,10 @@
     <ClCompile Include="Button.cpp" />
     <ClCompile Include="Color.cpp" />
     <ClCompile Include="Cuadrado.cpp" />
+    <ClCompile Include="GameManager.cpp" />
     <ClCompile Include="Grid.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="MainMenu.cpp" />
     <ClCompile Include="Pieza.cpp" />
     <ClCompile Include="Tablero.cpp" />
     <ClCompile Include="Tetris.cpp" />
@@ -142,7 +144,9 @@
     <ClInclude Include="Button.h" />
     <ClInclude Include="Color.h" />
     <ClInclude Include="Cuadrado.h" />
+    <ClInclude Include="GameManager.h" />
     <ClInclude Include="Grid.h" />
+    <ClInclude Include="MainMenu.h" />
     <ClInclude Include="Pieza.h" />
     <ClInclude Include="Tablero.h" />
     <ClInclude Include="Tetris.h" />

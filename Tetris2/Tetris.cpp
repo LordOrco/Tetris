@@ -5,87 +5,89 @@
 using namespace std;
 
 void Tetris::ProcessKeyPressed(unsigned char key, int px, int py) {
-	cout << "Tecla pulsada " << key << endl;
-	if ((clock() - moveTimer) >= 100) {
-		moveTimer = clock();
-		switch (key) {
-		case 'w':
-			girarPieza();
-			break;
-		case 'a':
-			moverPieza(-1);
-			break;
-		case 's':
-			gestionBajada();
-			break;
-		case 'd':
-			moverPieza(1);
-			break;
+	if (!pause) {
+		if ((clock() - moveTimer) >= 100) {
+			moveTimer = clock();
+			switch (key) {
+			case 'w':
+				girarPieza();
+				break;
+			case 'a':
+				moverPieza(-1);
+				break;
+			case 's':
+				gestionBajada();
+				break;
+			case 'd':
+				moverPieza(1);
+				break;
+			}
 		}
-	}
-	if (key == 'q' && (clock() - dropTimer) >= 400) {
-		dropTimer = clock();
+		if (key == 'q' && (clock() - dropTimer) >= 400) {
+			dropTimer = clock();
 
-		while (tablero.puedeBajar(pieza)) {
-			tablero.bajarPieza(pieza);
+			while (tablero.puedeBajar(pieza)) {
+				tablero.bajarPieza(pieza);
+			}
+			tablero.bloquearPieza(pieza);
+			tablero.vaciarFilas();
+			piezaSinColocar = false;
 		}
-		tablero.bloquearPieza(pieza);
-		tablero.vaciarFilas();
-		piezaSinColocar = false;
-	}
-	if (key == 'c') {
-		if (!hayReserva) {
-			tablero.eliminarPieza(pieza);
-			hayReserva = true;
-			piezaCambiada = true;
+		if (key == 'c') {
+			if (!hayReserva) {
+				tablero.eliminarPieza(pieza);
+				hayReserva = true;
+				piezaCambiada = true;
 
-			reserva = Pieza(pieza.tipo);
-			pieza = Pieza(piezas[0].tipo);
-			piezas[0] = Pieza(piezas[1].tipo);
-			piezas[1] = Pieza(piezas[2].tipo);
-			piezas[2] = Pieza(piezas[3].tipo);
-			piezas[3] = Pieza(rand() % 7 + 1);
+				reserva = Pieza(pieza.tipo);
+				pieza = Pieza(piezas[0].tipo);
+				piezas[0] = Pieza(piezas[1].tipo);
+				piezas[1] = Pieza(piezas[2].tipo);
+				piezas[2] = Pieza(piezas[3].tipo);
+				piezas[3] = Pieza(rand() % 7 + 1);
 
-			tablero.nuevaPieza(pieza);
-			//printGame();
+				tablero.nuevaPieza(pieza);
+				//printGame();
 
+			}
+			if (hayReserva && !piezaCambiada) {
+				tablero.eliminarPieza(pieza);
+				piezaCambiada = true;
+
+				Pieza aux = Pieza(pieza.tipo);
+				pieza = Pieza(reserva.tipo);
+				reserva = aux;
+
+				tablero.nuevaPieza(pieza);
+				//printGame();
+			}
 		}
-		if (hayReserva && !piezaCambiada) {
-			tablero.eliminarPieza(pieza);
-			piezaCambiada = true;
-
-			Pieza aux = Pieza(pieza.tipo);
-			pieza = Pieza(reserva.tipo);
-			reserva = aux;
-
-			tablero.nuevaPieza(pieza);
-			//printGame();
-		}
-	}
-	if (key == 'x') {
-		cout << "??";
 	}
 }
 
 void Tetris::ProcessMouseMovement(int x, int y) {
-	cout << "Movimiento del raton " << x << ", " << y << endl;
 }
 
 void Tetris::ProcessMouseClick(int button, int state, int x, int y) {
-	cout << "Click:  " << button << endl;
-	cout << prueba.GetVer1().GetX() << ", " << prueba.GetVer3().GetX() << endl;
+	cout << pausa.GetVer1().GetX() << ", " << pausa.GetVer3().GetX() << endl;
 	if (state == 1 && 
 		10 <= x && x <= 110 &&
 		20 <= y && y <= 60) {
-		prueba.pressed();
-		pause = !pause;
+		pausa.pressed();
+	}
+	if (state == 1 &&
+		10 <= x && x <= 110 &&
+		80 <= y && y <= 120) {
+		salir.pressed();
 	}
 }
 
 void Tetris::Init() {
 	tablero.Init();
+
 	tableroGUI.Init();
 	piezaReserva.Init();
+
 	pieza1.Init();
 	pieza2.Init();
 	pieza3.Init();
@@ -93,9 +95,13 @@ void Tetris::Init() {
 }
 
 void Tetris::Render() {
-	prueba.Render();
+	pausa.Render();
+	salir.Render();
+	score.Render();
+
 	tableroGUI.Update(tablero);
 	piezaReserva.Update(reserva);
+
 	pieza1.Update(piezas[0]);
 	pieza2.Update(piezas[1]);
 	pieza3.Update(piezas[2]);
@@ -103,6 +109,11 @@ void Tetris::Render() {
 }
 
 void Tetris::Update() {
+	if (pausa.GetIsPressed()) {
+		pause = !pause;
+		pausa.SetIsPressed(!pausa.GetIsPressed());
+	}
+
 	if (tablero.puedeNuevaPieza(pieza) && !pause) {
 
 		if (!piezaSinColocar && tablero.puedeNuevaPieza(pieza)) {
@@ -116,6 +127,7 @@ void Tetris::Update() {
 			piezaSinColocar = true;
 			piezaCambiada = false;
 			comprobarNivel();
+			score.SetString("Puntos: " + to_string(tablero.filasDestruidas));
 
 			//printGame();
 		}
@@ -126,8 +138,8 @@ void Tetris::Update() {
 		}
 
 	}
-	else if(!pause) {
-		glutLeaveMainLoop();
+	else if (!tablero.puedeNuevaPieza(pieza)) {
+		perder = true;
 	}
 	Render();
 }

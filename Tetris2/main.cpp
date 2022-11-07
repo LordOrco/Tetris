@@ -1,3 +1,4 @@
+#include "GameManager.h"
 #include "Tetris.h"
 
 using namespace std;
@@ -22,7 +23,7 @@ bool fullScreenMode = false;
 
 // USANDO TETRIS
 
-Tetris tetris;
+GameManager game;
 
 // FUNCIONES AUXILIARES
 
@@ -38,7 +39,7 @@ void initGraphics() {
     glEnable(GL_COLOR_MATERIAL);
     glClearColor(RED, GREEN, BLUE, ALPHA);
 
-    tetris.Init();
+    game.Init();
 }
 
 void display() {
@@ -59,7 +60,7 @@ void display() {
     glEnd();
     */
 
-    tetris.Render();
+    game.Render();
 
     glutSwapBuffers();
 }
@@ -75,22 +76,22 @@ void reshape(GLsizei width, GLsizei height) {
 }
 
 void idle() {
-    tetris.Update();
+    game.Update();
     glutPostRedisplay();
 }
 
 void keyPressed(unsigned char key, int px, int py) {
-    tetris.ProcessKeyPressed(key, px, py);
+    game.ProcessKeyPressed(key, px, py);
     glutPostRedisplay();
 }
 
 void mouseMoved(int x, int y) {
-    tetris.ProcessMouseMovement(x, y);
+    game.ProcessMouseMovement(x, y);
     glutPostRedisplay();
 }
 
 void mouseClicked(int button, int state, int x, int y) {
-    tetris.ProcessMouseClick(button, state, x, y);
+    game.ProcessMouseClick(button, state, x, y);
     glutPostRedisplay();
 }
 

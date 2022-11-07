@@ -2,19 +2,19 @@
 #include <iostream>
 #include <stdlib.h>
 #include <ctime>
-#include "Pieza.h"
 #include "Tablero.h"
 #include "Grid.h"
 #include "Button.h"
 #include "GL/freeglut.h"
-#include "Text.h"
 
 using namespace std;
 
 
 class Tetris {
 public:
-	Button prueba;
+	Button pausa;
+	Button salir;
+	Text score;
 
 	Grid tableroGUI;
 	Grid piezaReserva;
@@ -24,7 +24,6 @@ public:
 	Grid pieza4;
 
 	int filasDestruidas;
-
 	int  nivel;
 	int tiempoPP;
 		
@@ -35,6 +34,8 @@ public:
 
 	bool piezaSinColocar;
 	bool pause;
+	bool perder;
+	bool exitGame;
 	bool piezaCambiada;
 	bool hayReserva;
 	
@@ -48,17 +49,24 @@ public:
 		tiempoPP(1000),
 		reserva(0),
 		piezas{},
+
 		piezaSinColocar(false),
 		piezaCambiada(false),
 		hayReserva(false),
 		pause(false),
+		perder(false),
+		exitGame(false),
+
 		pieza1(Vector3D(-10, -11, 0), piezas[0]),
 		pieza2(Vector3D(-5, -11, 0), piezas[1]),
 		pieza3(Vector3D(0, -11, 0), piezas[2]),
 		pieza4(Vector3D(5, -11, 0), piezas[3]),
 		piezaReserva(Vector3D(-5, 15, 0), reserva),
 		tableroGUI(Vector3D(-5, 10, 0)),
-		prueba(Vector3D(-12, 14, 0), 5, 2, Color(1, 1, 1), (unsigned char*) "Pause")
+
+		pausa(Vector3D(-12, 14, 0), 5, 2, Color(1, 1, 1), string("Pause")),
+		salir(Vector3D(-12, 11, 0), 5, 2, Color(1, 1, 1), string("Salir")),
+		score(string("Puntos: 0"), Vector3D(0, 11, 0))
 
 	{
 		for (int i = 0; i < 4; i++) {
@@ -75,6 +83,7 @@ public:
 	void moverPieza(int dir);
 	void girarPieza();
 	void subirNivel();
+	void exit();
 
 	void Init();
 	void Render();

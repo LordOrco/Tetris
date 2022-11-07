@@ -2,6 +2,7 @@
 
 void Button::pressed() {
 	cout << "Has pulsado el boton";
+	SetIsPressed(!GetIsPressed());
 }
 
 void Button::Render() {

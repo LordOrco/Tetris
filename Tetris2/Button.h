@@ -20,9 +20,11 @@ private:
 	float width;
 	float height;
 
+	bool isPressed;
+
 public:
 
-	Button(Vector3D pPosition, float pWidth, float pHeight, Color pColor, unsigned char* pString) :
+	Button(Vector3D pPosition, float pWidth, float pHeight, Color pColor, string pString) :
 		texto(pString, Vector3D(pPosition.GetX() + pWidth / 4, pPosition.GetY() - pHeight/2, pPosition.GetZ() + 0.0001)),
 
 		position(pPosition),
@@ -33,7 +35,9 @@ public:
 		ver1(pPosition),
 		ver2(ver1.GetX() + pWidth, ver1.GetY(), ver1.GetZ()),
 		ver3(ver1.GetX() + pWidth, ver1.GetY() - pHeight, ver1.GetZ()),
-		ver4(ver1.GetX(), ver1.GetY() - pHeight, ver1.GetZ())
+		ver4(ver1.GetX(), ver1.GetY() - pHeight, ver1.GetZ()),
+
+		isPressed(false)
 	{}
 
 	inline Vector3D GetPosition() { return this->position; }
@@ -45,6 +49,9 @@ public:
 	inline Color GetColor() { return this->color; }
 	inline float GetWidth() { return this->width; }
 	inline float GetHeight() { return this->height; }
+	inline bool GetIsPressed() { return this->isPressed; }
+
+	inline void SetIsPressed(bool pIsPressed) { this->isPressed = pIsPressed; }
 
 
 	void Render();
